@@ -1,14 +1,15 @@
 #pragma once
 
-#include <map>
-#include <vector>
 #include "SensorReader.h"
 
-class Statistics {
-public:
-    void calculate(vector<SensorReading*>& readings);
-    void printResults();
+#include <map>
+#include <string>
+#include <vector>
 
-private:
-    map<string, double> averages;
-};
+namespace sensor {
+
+using SensorAverages = std::map<std::string, double>;
+
+SensorAverages calculateAverages(const std::vector<SensorReading>& readings);
+
+}

@@ -1,0 +1,19 @@
+{
+  ".mull.yml": "d104db5ae84303417a6ea02af7d093b0612cc2c4044a40e265bd8e0af3958fa5",
+  "CMakeLists.txt": "13936195f73e4d2c10ee129c37d345f353090f3c999cf26142dfd0fb54dd285f",
+  "data/sensor_data.txt": "dbba8be538782022f995188df45adfefe4d64f8605ee611509bbd9d5de4ff144",
+  "src/Application.cpp": "8919eb2d732bb1d04ad23eded62c5ed00fb923f3559bb914cde05d8f75383039",
+  "src/Application.h": "c8a9c2d8260c00c704a894e102a576181b1f34cebce67c707d514068b5c26675",
+  "src/SensorReader.cpp": "7f3e7d8ff4f74c9b2c854acfe4072b708527a6023871fa0a431e243e1ba8fadc",
+  "src/SensorReader.h": "1a09a64282943cb10d14c9afe873cb6f161b5bed6cc405e7701a1c17dc6931db",
+  "src/Statistics.cpp": "44a7759252a0c8ce540cb2b1b9b88f7ccd66f06f85865d668c061ebcc7a6316d",
+  "src/Statistics.h": "8eb39bb2b516b55c87beacabec328872754746eb83958307293f8dbd8c842cdc",
+  "src/main.cpp": "456037d86f842028939fc8a645a1b3598c3ea0619dec5c9199e78df05cb19e11",
+  "tests/cli_test.py": "db3444012cb71289d290a8d2ae0f5e81cde05041f5a3e6571d4174dc5d62af41",
+  "tests/sensor_tests.cpp": "ba783c1e2c40e1cb8d7f9a882799bc5d9e5029a6f4ed0d30d9884e996cc27e1c",
+  "tools/bootstrap-quality.sh": "4198b1128b377848446e887517361d00dd233683009529b1298d947b583e306b",
+  "tools/crap_report.py": "1778815a714e3b5408e592e031f5f575631bb193f14bc2e58f51dd9818e27c01",
+  "tools/requirements-quality.txt": "efe6d008ff6dd7b88d9f42efcb2c23bd8dad13da4e4ed585a445492b751fe472",
+  "tools/run-checks.sh": "ebf951094b15bf6bd3d71445adc0ada7a4ae8e49223530f52d268c7431d39fb7",
+  "tools/tests/test_crap_report.py": "1f405a1c4a7e1b13ee9816d67574c30474008715d421a4ab3d2716c3ac6ce810"
+}

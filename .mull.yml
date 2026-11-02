@@ -1,0 +1,9 @@
+mutators:
+  - cxx_default
+  - cxx_arithmetic_assignment
+  - cxx_logical
+  - negate_mutator
+includePaths:
+  - .*/src/.*
+excludePaths:
+  - .*/src/main.cpp

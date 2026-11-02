@@ -1,17 +1,7 @@
-#include <iostream>
-#include "Statistics.h"
+#include "Application.h"
 
-using namespace std;
+#include <iostream>
 
 int main(int argc, char* argv[]) {
-    char* filename = argv[1];
-
-    SensorReader reader;
-    reader.loadFile(filename);
-
-    Statistics stats;
-    stats.calculate(reader.getReadings());
-    stats.printResults();
-
-    return 0;
+    return sensor::runSensorMonitor({argv + 1, argv + argc}, std::cout, std::cerr);
 }

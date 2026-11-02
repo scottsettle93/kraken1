@@ -1,0 +1,67 @@
+{
+  "metric": "CRAP using per-function line coverage",
+  "coverage_format": "gcovr 0.15",
+  "functions": [
+    {
+      "file": "src/Application.cpp",
+      "function": "sensor::runSensorMonitor",
+      "start_line": 13,
+      "complexity": 6,
+      "lines_covered": 21,
+      "lines_total": 21,
+      "line_coverage": 1.0,
+      "branches_covered": 29,
+      "branches_total": 29,
+      "crap_line": 6.0
+    },
+    {
+      "file": "src/SensorReader.cpp",
+      "function": "sensor::parseValue",
+      "start_line": 13,
+      "complexity": 6,
+      "lines_covered": 11,
+      "lines_total": 11,
+      "line_coverage": 1.0,
+      "branches_covered": 18,
+      "branches_total": 18,
+      "crap_line": 6.0
+    },
+    {
+      "file": "src/SensorReader.cpp",
+      "function": "sensor::readReadings",
+      "start_line": 30,
+      "complexity": 7,
+      "lines_covered": 23,
+      "lines_total": 23,
+      "line_coverage": 1.0,
+      "branches_covered": 35,
+      "branches_total": 35,
+      "crap_line": 7.0
+    },
+    {
+      "file": "src/Statistics.cpp",
+      "function": "sensor::calculateAverages",
+      "start_line": 10,
+      "complexity": 6,
+      "lines_covered": 25,
+      "lines_total": 25,
+      "line_coverage": 1.0,
+      "branches_covered": 15,
+      "branches_total": 15,
+      "crap_line": 6.0
+    },
+    {
+      "file": "src/main.cpp",
+      "function": "main",
+      "start_line": 5,
+      "complexity": 1,
+      "lines_covered": 2,
+      "lines_total": 2,
+      "line_coverage": 1.0,
+      "branches_covered": 2,
+      "branches_total": 2,
+      "crap_line": 1.0
+    }
+  ],
+  "max_crap_line": 7.0
+}

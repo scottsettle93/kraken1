@@ -1,21 +1,16 @@
-#include <vector>
-#include <string>
+#pragma once
 
-using namespace std;
+#include <istream>
+#include <string>
+#include <vector>
+
+namespace sensor {
 
 struct SensorReading {
-    string type;
+    std::string type;
     double value;
 };
 
-class SensorReader {
-public:
-    SensorReader();
-    ~SensorReader();
+std::vector<SensorReading> readReadings(std::istream& input);
 
-    void loadFile(char* filename);
-    vector<SensorReading*>& getReadings();
-
-private:
-    vector<SensorReading*> readings;
-};
+}

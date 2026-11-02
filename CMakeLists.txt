@@ -1,8 +1,71 @@
-cmake_minimum_required(VERSION 3.5)
-project(sensor_monitor)
+cmake_minimum_required(VERSION 3.16)
+project(sensor_monitor VERSION 1.0 LANGUAGES CXX)
 
-add_executable(sensor_monitor
-    src/main.cpp
-    src/SensorReader.cpp
-    src/Statistics.cpp
-)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+option(SENSOR_SANITIZERS "Enable address and undefined-behavior sanitizers" OFF)
+option(SENSOR_COVERAGE "Enable gcov-compatible coverage" OFF)
+option(SENSOR_MUTATION "Instrument production library with Mull" OFF)
+option(SENSOR_STRICT "Treat compiler warnings as errors" OFF)
+
+if(SENSOR_SANITIZERS AND (SENSOR_COVERAGE OR SENSOR_MUTATION))
+    message(FATAL_ERROR "Use separate sanitizer, coverage, and mutation builds")
+endif()
+if(SENSOR_COVERAGE AND SENSOR_MUTATION)
+    message(FATAL_ERROR "Use separate coverage and mutation builds")
+endif()
+if(SENSOR_MUTATION AND NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    message(FATAL_ERROR "Mutation builds require Clang")
+endif()
+
+add_library(sensor_core src/SensorReader.cpp src/Statistics.cpp src/Application.cpp)
+target_include_directories(sensor_core PUBLIC src)
+add_executable(sensor_monitor src/main.cpp)
+target_link_libraries(sensor_monitor PRIVATE sensor_core)
+set(sensor_targets sensor_core sensor_monitor)
+
+include(CTest)
+if(BUILD_TESTING)
+    find_package(GTest CONFIG REQUIRED)
+    add_executable(sensor_tests tests/sensor_tests.cpp)
+    target_link_libraries(sensor_tests PRIVATE sensor_core GTest::gtest_main)
+    list(APPEND sensor_targets sensor_tests)
+    include(GoogleTest)
+    gtest_discover_tests(sensor_tests)
+    find_package(Python3 REQUIRED COMPONENTS Interpreter)
+    add_test(NAME cli_integration
+        COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/cli_test.py
+                $<TARGET_FILE:sensor_monitor> ${CMAKE_CURRENT_SOURCE_DIR}/data/sensor_data.txt)
+endif()
+
+foreach(target IN LISTS sensor_targets)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+        target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wsign-conversion -Wshadow -Wformat=2)
+        if(SENSOR_STRICT)
+            target_compile_options(${target} PRIVATE -Werror)
+        endif()
+    endif()
+    if(SENSOR_SANITIZERS)
+        target_compile_options(${target} PRIVATE -fsanitize=address,undefined,float-cast-overflow -fno-omit-frame-pointer)
+        target_link_options(${target} PRIVATE -fsanitize=address,undefined,float-cast-overflow)
+    endif()
+    if(SENSOR_COVERAGE)
+        target_compile_options(${target} PRIVATE --coverage)
+        target_link_options(${target} PRIVATE --coverage)
+    endif()
+    if(SENSOR_MUTATION)
+        target_compile_options(${target} PRIVATE -fprofile-instr-generate -fcoverage-mapping)
+        target_link_options(${target} PRIVATE -fprofile-instr-generate)
+    endif()
+endforeach()
+
+if(SENSOR_MUTATION)
+    find_file(MULL_PLUGIN NAMES mull-ir-frontend-19 mull-ir-frontend-19.so
+        PATHS /usr/local/lib /usr/lib DOC "Mull compiler plugin")
+    if(NOT EXISTS "${MULL_PLUGIN}")
+        message(FATAL_ERROR "Set MULL_PLUGIN to the Mull compiler plugin matching Clang")
+    endif()
+    target_compile_options(sensor_core PRIVATE -fpass-plugin=${MULL_PLUGIN} -grecord-command-line -g)
+endif()

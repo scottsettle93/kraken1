@@ -1,7 +1,5 @@
-<<<<<<< HEAD
-build
-=======
 build/
 *.o
 *.out
->>>>>>> dev
+.agents
+.scratch/
